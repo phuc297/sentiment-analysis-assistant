@@ -1,6 +1,6 @@
 import streamlit as st
 import requests
-import config
+import config as config
 import pandas as pd
 from datetime import datetime
 from historydb import HistoryDB, create_record

@@ -40,7 +40,7 @@ uv sync
 The backend runs on Uvicorn and serves the sentiment analysis model via an API.
 
 ```bash
-uvicorn sentiment_api:app
+uvicorn src.api:app
 ```
 
 ### 2. Start the Streamlit Frontend
@@ -48,5 +48,5 @@ uvicorn sentiment_api:app
 The frontend is the interactive user interface that communicates with the FastAPI backend.
 
 ```bash
-streamlit run streamlit_app.py
+streamlit run ./src/streamlit.py
 ```

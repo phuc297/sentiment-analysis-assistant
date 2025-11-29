@@ -6,7 +6,7 @@ from pydantic import BaseModel
 import uvicorn
 import numpy as np
 import os
-import config
+import src.config as config
 from underthesea import word_tokenize
 from yaspin import yaspin
 import time
