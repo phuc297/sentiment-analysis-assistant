@@ -144,5 +144,7 @@ if st.session_state.history is not None:
 
 render_history_sidebar()
 with history_tab:
-    hist_table = pd.DataFrame(history_db.get_all()).drop(columns='id')
-    st.dataframe(hist_table, hide_index=True)
+    hist_list = history_db.get_all()
+    if hist_list:
+        hist_table = pd.DataFrame(hist_list).drop(columns='id')
+        st.dataframe(hist_table, hide_index=True)
