@@ -17,6 +17,10 @@ dependencies = [
     "uvicorn>=0.38.0",
     "python-dotenv>=1.2.1",
     "yaspin>=3.3.0",
+    "ipykernel>=7.1.0",
+    "matplotlib>=3.10.7",
+    "seaborn>=0.13.2",
+    "pandas>=2.3.3",
 ]
 
 [tool.uv.sources]
