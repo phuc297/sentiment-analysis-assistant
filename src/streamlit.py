@@ -92,12 +92,6 @@ def render_results(label, probabilities, timestamp):
         st.markdown(f"Thời gian: **{timestamp}**")
 
 
-def save_history(input_text, label, probabilities, timestamp):
-    record = create_record(
-        input_text, label, probabilities, timestamp)
-    history_db.add(record)
-
-
 def prediction_flow():
     if not input_text.strip():
         st.warning("Vui lòng nhập văn bản để dự đoán.")
@@ -114,7 +108,7 @@ def prediction_flow():
     if input_text != st.session_state.last_predicted['sentence']:
         timestamp_dt = datetime.now()
         timestamp = timestamp_dt.strftime("%d/%m/%Y, %I:%M %p")
-        save_history(input_text, label, probabilities, timestamp_dt)
+        history_db.save(input_text, label, probabilities, timestamp_dt)
         st.session_state.last_predicted = {"sentence": input_text,
                                            "timestamp": timestamp,
                                            }
@@ -146,5 +140,5 @@ render_history_sidebar()
 with history_tab:
     hist_list = history_db.get_all()
     if hist_list:
-        hist_table = pd.DataFrame(hist_list).drop(columns='id')
+        hist_table = pd.DataFrame(hist_list).sort_values(by="id").drop(columns='id')
         st.dataframe(hist_table, hide_index=True)
