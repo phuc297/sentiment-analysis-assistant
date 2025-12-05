@@ -73,6 +73,11 @@ class HistoryDB(metaclass=SingletonMeta):
         result_list = self.cursor.fetchall()
         return [dict(s) for s in result_list]
 
+    def save(self, input_text, label, probabilities: list, timestamp):
+        record = create_record(
+            input_text, label, probabilities, timestamp)
+        self.add(record)
+
 
 def create_record(sentence, label, probabilities, timestamp):
     return {
