@@ -20,7 +20,7 @@ uv venv
 
 # Activate the virtual environment
 source .venv/bin/activate # (in Linux)
-venv\Scripts\Activate # (in Windows)
+.venv\Scripts\Activate # (in Windows)
 ```
 
 
