@@ -10,6 +10,7 @@ import src.config as config
 from underthesea import word_tokenize
 from yaspin import yaspin
 import time
+from src.restore_diacritics import RestoreDiacriticsModel
 
 LABELS = ["negative", "positive", "neutral"]
 
@@ -18,16 +19,21 @@ model_path = os.path.join(config.MODEL_SAVE_PATH, config.MODEL_NAME)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    global model, tokenizer
+    global model, tokenizer, restore_diacritics_model
     model = RobertaForSequenceClassification.from_pretrained(model_path)
     tokenizer = AutoTokenizer.from_pretrained(model_path, use_fast=False)
+    restore_diacritics_model = RestoreDiacriticsModel(config.MODEL_SAVE_PATH)
+    
     model.eval()
     yield
     del model
     del tokenizer
+    del restore_diacritics_model
 
 
 def predict_sentiment(sentence: str):
+    sentence = restore_diacritics_model.greedy_decode(sentence)
+    print(sentence)
     sentence = word_tokenize(sentence, format="text")
     inputs = tokenizer(sentence, padding=True,
                        truncation=True, return_tensors="pt")
